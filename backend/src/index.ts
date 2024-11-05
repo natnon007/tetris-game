@@ -129,6 +129,6 @@ const app = new Elysia()
       body: request.body
     });
   })
-  .listen(port: 3000);
+  .listen(3000);
 
 console.log(`🚀 Server is running at http://localhost:${app.server?.port}/graphql`);
