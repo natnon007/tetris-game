@@ -112,8 +112,8 @@ const yoga = createYoga({
   schema,
   graphiql: true,
   cors: {
-    origin: ['http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:5173'],
-    credentials: false,
+    origin: ['*'],
+    credentials: true,
     allowedHeaders: ['content-type']
   }
 });
@@ -129,9 +129,6 @@ const app = new Elysia()
       body: request.body
     });
   })
-  .listen({
-    port: 3000,
-    hostname: '0.0.0.0' // ให้ฟังทุกอินเทอร์เฟซ
-  });
+  .listen(port: 3000);
 
 console.log(`🚀 Server is running at http://localhost:${app.server?.port}/graphql`);
