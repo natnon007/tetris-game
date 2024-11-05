@@ -129,6 +129,9 @@ const app = new Elysia()
       body: request.body
     });
   })
-  .listen(3000);
+  .listen({
+    port: 3000,
+    hostname: '0.0.0.0' // ให้ฟังทุกอินเทอร์เฟซ
+  });
 
 console.log(`🚀 Server is running at http://localhost:${app.server?.port}/graphql`);
