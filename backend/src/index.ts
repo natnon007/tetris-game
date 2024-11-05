@@ -112,8 +112,8 @@ const yoga = createYoga({
   schema,
   graphiql: true,
   cors: {
-    origin: ['*'],
-    credentials: true,
+    origin: ['http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:5173'],
+    credentials: false,
     allowedHeaders: ['content-type']
   }
 });
