@@ -1,5 +1,5 @@
 // src/services/api.ts
-const API_URL = 'http://localhost:3000/graphql';
+const API_URL = 'http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:3000/graphql';
 
 export interface Score {
   id: string;
