@@ -112,7 +112,7 @@ const yoga = createYoga({
   schema,
   graphiql: true,
   cors: {
-    origin: ['http://localhost:5173'],
+    origin: ['*'],
     credentials: true,
     allowedHeaders: ['content-type']
   }

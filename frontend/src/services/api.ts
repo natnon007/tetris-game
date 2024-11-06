@@ -1,5 +1,5 @@
 // src/services/api.ts
-const API_URL = 'http://localhost:3000/graphql';
+const BACKEND_URL = 'http://localhost:3000/graphql';
 
 export interface Score {
   id: string;
@@ -23,7 +23,7 @@ const getPlayerIP = async (): Promise<string> => {
 
 export const getHighScores = async (): Promise<Score[]> => {
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(BACKEND_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export const submitScore = async (player_name: string, score: number): Promise<S
   try {
     const ip = await getPlayerIP();
     
-    const response = await fetch(API_URL, {
+    const response = await fetch(BACKEND_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
