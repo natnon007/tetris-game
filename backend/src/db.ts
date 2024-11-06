@@ -8,6 +8,8 @@ export const pool = new Pool({
   port: 5432,
 });
 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 // สร้างตาราง scores
 export const createTables = async (): Promise<void> => {
   try {
@@ -27,13 +29,24 @@ export const createTables = async (): Promise<void> => {
   }
 };
 
-// เพิ่มฟังก์ชันสำหรับทดสอบการเชื่อมต่อ
-export const testConnection = async (): Promise<void> => {
-  try {
-    await pool.query('SELECT NOW()');
-    console.log('Database connection successful');
-  } catch (error) {
-    console.error('Database connection failed:', error);
-    throw error;
+export const connectWithRetry = async (maxAttempts: number = 5, delayMs: number = 5000): Promise<void> => {
+  let currentAttempt = 1;
+
+  while (currentAttempt <= maxAttempts) {
+    try {
+      const result = await pool.query('SELECT NOW()');
+      console.log('Database connection successful at:', result.rows[0].now);
+      return;
+    } catch (error) {
+      console.error(`Database connection attempt ${currentAttempt}/${maxAttempts} failed:`, error.message);
+      
+      if (currentAttempt === maxAttempts) {
+        throw new Error('Max connection attempts reached. Could not connect to database.');
+      }
+
+      console.log(`Retrying in ${delayMs/1000} seconds...`);
+      await delay(delayMs);
+      currentAttempt++;
+    }
   }
 };
