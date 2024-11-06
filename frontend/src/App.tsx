@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { GameBoard } from './components/GameBoard';
 import { HighScores } from './components/HighScores';
 import { ScoreModal } from './components/ScoreModal';
+import { NextPiece } from './components/NextPiece';
 import { useGameLogic } from './hooks/useGameLogic';
 
 const Container = styled.div`
@@ -14,6 +15,20 @@ const Container = styled.div`
   justify-content: center;
   gap: 2rem;
   align-items: center;
+`;
+
+const LeftPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 240px;
+`;
+
+const RightPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 240px;
 `;
 
 const GameContainer = styled.div`
@@ -156,11 +171,14 @@ const App: React.FC = () => {
   const { 
     board, 
     score, 
-    gameOver, 
-    startGame, 
+    gameOver,
+    isPaused,
+    startGame,
+    togglePause, 
     displayBoard, 
     linesCleared, 
-    level
+    level,
+    nextPiece
   } = useGameLogic();
   
   const [showScoreModal, setShowScoreModal] = useState(false);
@@ -177,14 +195,16 @@ const App: React.FC = () => {
 
   return (
     <Container>
-      <SidePanel>
-        <StartButton 
-          onClick={startGame} 
-          disabled={showScoreModal}
-          $gameOver={gameOver}
-        >
-          Start New Game
-        </StartButton>
+      <LeftPanel>
+        <Button onClick={startGame} disabled={showScoreModal}>
+          {gameOver ? "Start New Game" : "Restart Game"}
+        </Button>
+        
+        {!gameOver && (
+          <Button onClick={togglePause}>
+            {isPaused ? "Resume Game" : "Pause Game"}
+          </Button>
+        )}
         
         <Score>
           <h3>Score</h3>
@@ -221,15 +241,28 @@ const App: React.FC = () => {
             <span>Hard Drop</span>
             <kbd>Space</kbd>
           </p>
+          <p>
+            <span>Pause Game</span>
+            <kbd>Esc</kbd>
+          </p>
         </Controls>
-
-        <HighScores />
-      </SidePanel>
+      </LeftPanel>
 
       <GameContainer>
         <Title>TETRIS</Title>
+        {isPaused && (
+          <PauseOverlay>
+            <PauseText>PAUSED</PauseText>
+            <SubText>Press ESC to resume</SubText>
+          </PauseOverlay>
+        )}
         <GameBoard board={displayBoard} />
       </GameContainer>
+
+      <RightPanel>
+        <NextPiece piece={nextPiece} />
+        <HighScores />
+      </RightPanel>
 
       {showScoreModal && (
         <ScoreModal
@@ -240,5 +273,30 @@ const App: React.FC = () => {
     </Container>
   );
 };
+
+
+// เพิ่ม styled components สำหรับ Pause overlay
+const PauseOverlay = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  z-index: 10;
+`;
+
+const PauseText = styled.div`
+  font-size: 2rem;
+  color: #4CAF50;
+  margin-bottom: 1rem;
+`;
+
+const SubText = styled.div`
+  font-size: 1rem;
+  color: #fff;
+`;
 
 export default App;

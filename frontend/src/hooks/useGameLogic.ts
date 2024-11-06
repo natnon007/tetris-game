@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Cell, TetrominoType } from '../types';
+import { BOARD_HEIGHT, BOARD_WIDTH, TETROMINOES } from '../constants';
 
-const BOARD_HEIGHT = 20;
-const BOARD_WIDTH = 10;
+
 
 const createEmptyBoard = (): Cell[][] =>
   Array(BOARD_HEIGHT).fill(null).map(() =>
@@ -11,42 +11,6 @@ const createEmptyBoard = (): Cell[][] =>
       filled: false
     }))
   );
-
-const TETROMINOES: Record<TetrominoType, number[][][]> = {
-  I: [
-    [[1, 1, 1, 1]],
-    [[1], [1], [1], [1]],
-  ],
-  J: [
-    [[1, 0, 0], [1, 1, 1]],
-    [[1, 1], [1, 0], [1, 0]],
-    [[1, 1, 1], [0, 0, 1]],
-    [[0, 1], [0, 1], [1, 1]],
-  ],
-  L: [
-    [[0, 0, 1], [1, 1, 1]],
-    [[1, 0], [1, 0], [1, 1]],
-    [[1, 1, 1], [1, 0, 0]],
-    [[1, 1], [0, 1], [0, 1]],
-  ],
-  O: [
-    [[1, 1], [1, 1]],
-  ],
-  S: [
-    [[0, 1, 1], [1, 1, 0]],
-    [[1, 0], [1, 1], [0, 1]],
-  ],
-  T: [
-    [[0, 1, 0], [1, 1, 1]],
-    [[1, 0], [1, 1], [1, 0]],
-    [[1, 1, 1], [0, 1, 0]],
-    [[0, 1], [1, 1], [0, 1]],
-  ],
-  Z: [
-    [[1, 1, 0], [0, 1, 1]],
-    [[0, 1], [1, 1], [1, 0]],
-  ],
-};
 
 export const useGameLogic = () => {
   const [board, setBoard] = useState(createEmptyBoard());
@@ -60,6 +24,13 @@ export const useGameLogic = () => {
     position: [number, number];
     rotation: number;
   } | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [nextPiece, setNextPiece] = useState<TetrominoType | null>(null);
+
+  const getRandomPiece = (): TetrominoType => {
+    const types: TetrominoType[] = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
+    return types[Math.floor(Math.random() * types.length)];
+  };
 
   const startGame = useCallback(() => {
     setBoard(createEmptyBoard());
@@ -67,18 +38,37 @@ export const useGameLogic = () => {
     setLinesCleared(0);
     setLevel(1);
     setGameOver(false);
+    setIsPaused(false);
+    setNextPiece(getRandomPiece());
     spawnPiece();
   }, []);
 
+  const togglePause = useCallback(() => {
+    if (!gameOver && currentPiece) {
+      setIsPaused(prev => !prev);
+    }
+  }, [gameOver, currentPiece]);
+
   const spawnPiece = useCallback(() => {
-    const types: TetrominoType[] = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
-    const type = types[Math.floor(Math.random() * types.length)];
+    if (!nextPiece) {
+      // กรณีเริ่มเกมครั้งแรก
+      const currentType = getRandomPiece();
+      setCurrentPiece({
+        type: currentType,
+        position: [0, Math.floor(BOARD_WIDTH / 2) - 1],
+        rotation: 0
+      });
+      setNextPiece(getRandomPiece());
+      return;
+    }
+    // ใช้ nextPiece เป็น currentPiece และสุ่ม nextPiece ใหม่
     setCurrentPiece({
-      type,
+      type: nextPiece,
       position: [0, Math.floor(BOARD_WIDTH / 2) - 1],
       rotation: 0
     });
-  }, []);
+    setNextPiece(getRandomPiece());
+  }, [nextPiece]);
 
   const getCurrentPieceMatrix = useCallback(() => {
     if (!currentPiece) return null;
@@ -270,16 +260,16 @@ export const useGameLogic = () => {
     setScore(prev => prev + ((newY - y) * 2));
   }, [currentPiece, gameOver, board, getCurrentPieceMatrix, isValidMove, checkLines, spawnPiece]);
 
-  // Game loop
+  // ปรับปรุง Game loop
   useEffect(() => {
-    if (gameOver) return;
+    if (gameOver || isPaused) return;
     
     const interval = setInterval(() => {
       moveDown();
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [moveDown, gameOver]);
+  }, [moveDown, gameOver, isPaused]);
 
   // Update display board
   useEffect(() => {
@@ -289,7 +279,15 @@ export const useGameLogic = () => {
   // Keyboard controls
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (!currentPiece || gameOver) return;
+      // ถ้ากด Escape ให้ toggle pause
+      if (e.key === 'Escape') {
+        togglePause();
+        e.preventDefault();
+        return;
+      }
+
+      // ถ้าเกมถูก pause ไม่ให้ควบคุมได้
+      if (!currentPiece || gameOver || isPaused) return;
       
       const [y, x] = currentPiece.position;
       const pieceMatrix = getCurrentPieceMatrix();
@@ -329,15 +327,18 @@ export const useGameLogic = () => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [currentPiece, gameOver, moveDown, rotate, getCurrentPieceMatrix, isValidMove, hardDrop]);
+  }, [currentPiece, gameOver, isPaused, moveDown, rotate, getCurrentPieceMatrix, isValidMove, hardDrop, togglePause]);
 
   return { 
     board,
     displayBoard,
     score,
     gameOver,
+    isPaused,
     startGame,
+    togglePause,
     linesCleared,
-    level
+    level,
+    nextPiece  // เพิ่ม nextPiece
   };
 };
