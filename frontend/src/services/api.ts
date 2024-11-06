@@ -1,5 +1,5 @@
 // src/services/api.ts
-const BACKEND_URL = 'http://localhost:3000/graphql';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000/graphql';
 
 export interface Score {
   id: string;
