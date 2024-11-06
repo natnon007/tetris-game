@@ -47,6 +47,8 @@ services:
     working_dir: /app
     volumes:
       - ./frontend:/app
+    environment:
+      ฺBACKEND_URL: http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:3000/graphql
     ports:
       - "5173:5173"
     command: sh -c "bun install && bun run vite --host"

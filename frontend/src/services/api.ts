@@ -1,5 +1,5 @@
 // src/services/api.ts
-const BACKEND_URL = 'http://localhost:3000/graphql';
+const API_URL = 'http://localhost:3000/graphql';
 
 export interface Score {
   id: string;
