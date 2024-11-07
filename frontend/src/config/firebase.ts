@@ -2,13 +2,13 @@
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBAAFCDM8HgSpIfcdZGWX4nKsHEnrAXU-U",
-  authDomain: "tetris-game-oauth.firebaseapp.com",
-  projectId: "tetris-game-oauth",
-  storageBucket: "tetris-game-oauth.firebasestorage.app",
-  messagingSenderId: "679946153536",
-  appId: "1:679946153536:web:0fdfb33fde4236942e39a5",
-  measurementId: "G-7KNPJH952G"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 
