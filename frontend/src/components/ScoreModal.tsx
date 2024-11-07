@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { submitScore } from '../services/api';
+import { useAuth } from '../hooks/useAuth';  // เพิ่ม import useAuth
 
 const Overlay = styled.div`
   position: fixed;
@@ -97,16 +98,46 @@ const Message = styled.div<{ $isError?: boolean }>`
   font-size: 0.9rem;
 `;
 
+// เพิ่ม styled components สำหรับแสดงข้อมูลผู้ใช้ Google
+const PlayerInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #282c34;
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 4px;
+  border: 2px solid #4CAF50;
+`;
+
+const PlayerPhoto = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #4CAF50;
+`;
+
 interface Props {
   score: number;
   onSubmitted: () => void;
 }
 
 export const ScoreModal: React.FC<Props> = ({ score, onSubmitted }) => {
+  // เพิ่ม user จาก useAuth
+  const { user } = useAuth();
   const [playerName, setPlayerName] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
+  // เมื่อมี user จาก Google, ใช้ชื่อจาก Google
+  useEffect(() => {
+    if (user?.displayName) {
+      setPlayerName(user.displayName);
+    }
+  }, [user]);
 
   useEffect(() => {
     const preventGameKeys = (e: KeyboardEvent) => {
@@ -155,19 +186,30 @@ export const ScoreModal: React.FC<Props> = ({ score, onSubmitted }) => {
         <Title>Game Over!</Title>
         <ScoreDisplay>{score.toLocaleString()}</ScoreDisplay>
         <Form onSubmit={handleSubmit}>
-          <Input
-            type="text"
-            placeholder="Enter your name"
-            value={playerName}
-            onChange={(e) => {
-              setError('');
-              setPlayerName(e.target.value);
-            }}
-            maxLength={50}
-            required
-            autoFocus
-            disabled={submitting || success}
-          />
+          {user ? (
+            // แสดงข้อมูลผู้ใช้ Google
+            <PlayerInfo>
+              {user.photoURL && (
+                <PlayerPhoto src={user.photoURL} alt={user.displayName || ''} />
+              )}
+              {user.displayName}
+            </PlayerInfo>
+          ) : (
+            // แสดง input สำหรับใส่ชื่อ
+            <Input
+              type="text"
+              placeholder="Enter your name"
+              value={playerName}
+              onChange={(e) => {
+                setError('');
+                setPlayerName(e.target.value);
+              }}
+              maxLength={50}
+              required
+              autoFocus
+              disabled={submitting || success}
+            />
+          )}
           <Button type="submit" disabled={submitting || success || !playerName.trim()}>
             {submitting ? 'Submitting...' : success ? 'Score Saved!' : 'Save Score'}
           </Button>

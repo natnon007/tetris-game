@@ -5,6 +5,7 @@ import { HighScores } from './components/HighScores';
 import { ScoreModal } from './components/ScoreModal';
 import { NextPiece } from './components/NextPiece';
 import { useGameLogic } from './hooks/useGameLogic';
+import { Auth } from './components/Auth';
 
 const Container = styled.div`
   display: flex;
@@ -195,6 +196,7 @@ const App: React.FC = () => {
 
   return (
     <Container>
+      <Auth />  {/* เพิ่ม Auth component */}
       <LeftPanel>
         <Button onClick={startGame} disabled={showScoreModal}>
           {gameOver ? "Start New Game" : "Restart Game"}
