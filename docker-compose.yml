@@ -31,7 +31,7 @@ services:
     image: oven/bun:latest
     working_dir: /app
     environment:
-      DATABASE_URL: postgres://admin:admin@database:5432/tetris_db
+      VITE_DATABASE_URL: postgres://admin:admin@database:5432/tetris_db
     volumes:
       - ./backend:/app
     ports:

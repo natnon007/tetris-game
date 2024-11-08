@@ -1,11 +1,7 @@
 import { Pool } from 'pg';
 
 export const pool = new Pool({
-  user: 'admin',
-  host: 'database',
-  database: 'tetris_db',
-  password: 'admin',
-  port: 5432,
+  connectionString: import.meta.env.VITE_DATABASE_URL,
 });
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
