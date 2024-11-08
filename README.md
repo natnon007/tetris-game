@@ -2,10 +2,7 @@
 
 docker-compose up --build -d
 
-![image](https://github.com/user-attachments/assets/513b0169-407f-42c0-a625-d66077c4eed1)
-
-
-
+![image](https://github.com/user-attachments/assets/51d06cae-23bf-4a7d-aa45-ebd2edc030a6)
 
 ## 1. หลักการพัฒนา
 ### A. การจัดโครงสร้างโปรเจค (Project Structure)
