@@ -49,6 +49,106 @@ tetris-game/                      # Root directory
 │
 └── docker-compose.yml            # Docker composition
 ```
+### B. System Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph "Frontend (React + TypeScript)"
+        Game[Game Component]
+        Auth[Auth Component]
+        Score[Score Component]
+        GameLogic[Game Logic Hook]
+        AuthHook[Auth Hook]
+        APIService[API Service]
+    end
+
+    subgraph "Backend (Bun + Elysia + GraphQL)"
+        GQLServer[GraphQL Server]
+        DBConn[Database Connection]
+        Resolvers[GraphQL Resolvers]
+    end
+
+    subgraph "Database (PostgreSQL)"
+        DB[(Scores Table)]
+    end
+
+    subgraph "External Services"
+        Firebase[Firebase Auth]
+        IPApi[IP API]
+        CountryApi[Country API]
+        FlagCDN[Flag CDN]
+    end
+
+    %% Frontend Flow
+    Game --> GameLogic
+    Game --> Score
+    Auth --> AuthHook
+    Score --> APIService
+    AuthHook --> Firebase
+    APIService --> GQLServer
+
+    %% Backend Flow
+    GQLServer --> Resolvers
+    Resolvers --> DBConn
+    Resolvers --> IPApi
+    Resolvers --> CountryApi
+    DBConn --> DB
+
+    %% Auth Flow
+    AuthHook --> Firebase
+    Firebase --> Google[Google OAuth]
+
+    %% External API Flow
+    Score --> FlagCDN
+
+    style Game fill:#f9f,stroke:#333,stroke-width:2px
+    style Firebase fill:#FFA000,stroke:#333,stroke-width:2px
+    style DB fill:#336791,stroke:#333,stroke-width:2px
+```
+
+### C. Main Flow Sequence Diagram
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant FB as Firebase
+    participant B as Backend
+    participant DB as Database
+    participant E as External APIs
+
+    %% Authentication Flow
+    U->>F: Click Sign In
+    F->>FB: Request Google Sign In
+    FB->>U: Google Login Page
+    U->>FB: Authenticate
+    FB->>F: Return User Info
+    F->>F: Update Auth State
+
+    %% Game Flow
+    U->>F: Play Game
+    F->>F: Update Game State
+    F->>F: Calculate Score
+
+    %% Score Submission
+    U->>F: Game Over
+    F->>E: Get IP Address
+    E->>F: Return IP
+    F->>B: Submit Score (GraphQL)
+    B->>E: Get Country from IP
+    E->>B: Return Country
+    B->>DB: Save Score
+    DB->>B: Return Result
+    B->>F: Return Updated High Scores
+
+    %% High Scores Display
+    F->>B: Request High Scores
+    B->>DB: Query Top 5 Scores
+    DB->>B: Return Scores
+    B->>F: Return Formatted Scores
+    F->>E: Request Flag Icons
+    E->>F: Return Flags
+    F->>U: Display High Scores
+```
 
 ## 2. API ที่สำคัญ
   
