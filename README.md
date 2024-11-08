@@ -2,7 +2,8 @@
 
 docker-compose up --build -d
 
-![image](https://github.com/user-attachments/assets/6e4c0836-53af-46cf-829c-211b8e6aa40a)
+![image](https://github.com/user-attachments/assets/513b0169-407f-42c0-a625-d66077c4eed1)
+
 
 
 
