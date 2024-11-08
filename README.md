@@ -49,10 +49,10 @@ tetris-game/                      # Root directory
 ## 3. วิธี Deploy
 
 ## 4. About
-<a href="https://grad.dpu.ac.th/">
+<a href="https://grad.dpu.ac.th/" target="_blank">
     <img src="https://github.com/user-attachments/assets/d2b40ab8-9f43-4618-879c-3027e43c5dd5" alt="dpu" width="160" />
 </a>
-<a href="https://cite.dpu.ac.th/">
+<a href="https://cite.dpu.ac.th/" target="_blank">
     <img src="https://github.com/user-attachments/assets/74eebfd7-722e-451b-8e2a-69804c2155ab" alt="cite" width="160" />
 </a><br><br>
 Source Code นี้เป็นส่วนหนึ่งของวิชา CT648 - วิศวกรรมเว็บและคลาวด์<br>
