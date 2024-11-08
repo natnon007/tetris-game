@@ -15,19 +15,25 @@ tetris-game/                      # Root directory
 │   │   │   ├── GameBoard.tsx     # แสดงบอร์ดเกม
 │   │   │   ├── HighScores.tsx    # แสดงคะแนนสูงสุด
 │   │   │   ├── NextPiece.tsx     # แสดงบล็อกถัดไป
-│   │   │   └── ScoreModal.tsx    # Modal บันทึกคะแนน
+│   │   │   ├── ScoreModal.tsx    # Modal บันทึกคะแนน
+│   │   │   └── Auth.tsx          # ระบบ Google Sign-in
 │   │   │
 │   │   ├── hooks/                # Custom React hooks
-│   │   │   └── useGameLogic.ts   # Logic การเล่นเกม
+│   │   │   ├── useGameLogic.ts   # Game mechanics
+│   │   │   └── useAuth.ts        # Authentication logic
 │   │   │
 │   │   ├── services/             # External services
-│   │   │   └── api.ts            # API calls
+│   │   │   └── api.ts            # GraphQL client
 │   │   │
-│   │   ├── types.ts              # TypeScript type definitions
-│   │   ├── constants.ts          # ค่าคงที่ต่างๆ
+│   │   ├── config/               # Configurations
+│   │   │   └── firebase.ts       # Firebase setup
+│   │   │
+│   │   ├── types.ts              # TypeScript types
+│   │   ├── constants.ts          # Game constants
 │   │   ├── App.tsx               # Main component
 │   │   └── main.tsx              # Entry point
 │   │
+│   ├── .env                      # Environment variables
 │   ├── index.html                # HTML template
 │   ├── package.json              # Frontend dependencies
 │   ├── tsconfig.json             # TypeScript config
@@ -35,13 +41,13 @@ tetris-game/                      # Root directory
 │
 ├── backend/                      # Backend application
 │   ├── src/
-│   │   ├── index.ts              # Main entry point & GraphQL server
-│   │   └── db.ts                 # Database connection & queries
+│   │   ├── index.ts              # Main entry & GraphQL server
+│   │   └── db.ts                 # Database connection
 │   │
 │   ├── package.json              # Backend dependencies
 │   └── tsconfig.json             # TypeScript config
 │
-└── docker-compose.yml            # Docker composition file
+└── docker-compose.yml            # Docker composition
 ```
 
 ## 2. API ที่สำคัญ
