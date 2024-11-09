@@ -160,9 +160,12 @@ interface GameLogicAPI {
   
   // Actions
   startGame(): void
+  moveLeft(): void
+  moveRight(): void
   moveDown(): void
   rotate(): void
   hardDrop(): void
+  togglePause(): void
 }
 ```
 
