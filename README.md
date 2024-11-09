@@ -5,10 +5,40 @@ docker-compose up --build -d
 ![image](https://github.com/user-attachments/assets/51d06cae-23bf-4a7d-aa45-ebd2edc030a6)
 
 ## 1. หลักการพัฒนา
+เกม Tetris นี้ถูกพัฒนาขึ้นโดยใช้ React, TypeScript, Bun และ Elysia ในการพัฒนา โดยแบ่งออกเป็น 2 ส่วน ดังนี้
+### 1. Frontend เทคโนโลยีที่ใช้
+```plaintext
+// Core Technologies
+- React           // JavaScript library สำหรับสร้าง UI
+- TypeScript     // Typed JavaScript
+- Vite           // Build tool และ development server
+- Styled-components // CSS-in-JS library
 
+// Authentication
+- Firebase Auth   // ระบบ Google Sign-in
+- Firebase SDK   // Firebase JavaScript SDK
 
+// API Communication
+- GraphQL Client  // สื่อสารกับ Backend
+- Fetch API      // เรียกใช้ External APIs
+```
+### 2. Backend + Database เทคโนโลยีที่ใช้
+```plaintext
+// Core Technologies
+- Bun            // JavaScript runtime
+- Elysia        // Web framework สำหรับ Bun
+- TypeScript    // Type safety
 
-### A. การจัดโครงสร้างโปรเจค (Project Structure)
+// API Layer
+- GraphQL       // Query language
+- GraphQL Yoga  // GraphQL server implementation
+
+// Database
+- PostgreSQL    // Relational database
+- pg (node-pg)  // PostgreSQL client
+```
+
+### A. โครงสร้างโปรเจค (Project Structure)
 ```plaintext
 tetris-game/                      # Root directory
 │
@@ -58,7 +88,7 @@ tetris-game/                      # Root directory
 ### C. Main Flow Sequence Diagram
 ![Tetris-Main Flow Sequence Diagram-2024-11-08-064256](https://github.com/user-attachments/assets/cbd6beba-974f-44ab-a54c-7d727d79a442)
 
-### A. การแบ่งส่วนการทำงาน (Separation of Concerns)
+### A. แบ่งส่วนการทำงานตามโครงสร้าง (Separation of Concerns)
 1. Frontend
 ```typescript
 - Components/        // UI Components
