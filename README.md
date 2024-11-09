@@ -1,4 +1,4 @@
-﻿# tetris-game
+﻿# Tetris-game
 
 docker-compose up --build -d
 
