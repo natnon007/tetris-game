@@ -107,9 +107,6 @@ CREATE TABLE scores (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   country_code VARCHAR(2) DEFAULT 'UN'
 );
-
--- Indexes
-CREATE INDEX idx_scores_ranking ON scores (score DESC, created_at ASC);
 ```
 
 ### D. Container Architecture
