@@ -260,7 +260,7 @@ interface ErrorHandler {
 ## 3. วิธี Deploy
 **Demo:** http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:5173/
 
-## 4. About
+## About
 <a href="https://grad.dpu.ac.th/" target="_blank">
     <img src="https://github.com/user-attachments/assets/d2b40ab8-9f43-4618-879c-3027e43c5dd5" alt="dpu" width="160" />
 </a>
