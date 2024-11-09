@@ -258,6 +258,8 @@ interface ErrorHandler {
 }
 ```
 ## 3. วิธี Deploy
+<br>
+**Demo:** http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:5173/
 
 ## 4. About
 <a href="https://grad.dpu.ac.th/" target="_blank">
