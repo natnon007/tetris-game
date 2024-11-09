@@ -8,29 +8,29 @@ docker-compose up --build -d
 เกม Tetris นี้ถูกพัฒนาขึ้นโดยใช้ React, TypeScript, Bun และ Elysia ในการพัฒนาโดยจุดสำคัญของเกม Tetris นี้มีดังนี้
 ### a. หัวใจสำคัญของเกม
 ```plaintext
-// 1. บล็อก Tetris
+1. บล็อก Tetris
 const TETROMINOES = {
   I, J, L, O, S, T, Z  // บล็อกพื้นฐาน 7 แบบ
 };
 
-// 2. การเคลื่อนที่
+2. การเคลื่อนที่
 - เลื่อนซ้าย/ขวา (moveLeft, moveRight)
 - เลื่อนลง (moveDown)
 - หมุน (rotate)
 - Hard Drop (hardDrop)
 
-// 3. ระบบตรวจสอบการชน
+3. ระบบตรวจสอบการชน
 isValidMove(y: number, x: number, pieceMatrix: number[][]) 
 - ตรวจสอบขอบบอร์ด
 - ตรวจสอบการชนกับบล็อกอื่น
 ```
 ### b. ระบบคะแนน
 ```plaintext
-// 1. การให้คะแนน
+1. การให้คะแนน
 - เคลียร์แถว: score += (lines * 100 * level)
 - Hard Drop: score += ((dropDistance) * 2)
 
-// 2. ระดับความยาก
+2. ระดับความยาก
 - เพิ่มระดับทุก 10 แถว
 - ความเร็วเพิ่มตามระดับ
 ```
