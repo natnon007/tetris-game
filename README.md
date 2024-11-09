@@ -1,7 +1,5 @@
 ﻿# Tetris-game
 
-docker-compose up --build -d
-
 ![image](https://github.com/user-attachments/assets/76dd1cc6-4462-4644-9e0b-f09909ca19e1)
 
 ## 1. หลักการพัฒนา
