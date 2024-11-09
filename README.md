@@ -5,8 +5,48 @@ docker-compose up --build -d
 ![image](https://github.com/user-attachments/assets/51d06cae-23bf-4a7d-aa45-ebd2edc030a6)
 
 ## 1. หลักการพัฒนา
-เกม Tetris นี้ถูกพัฒนาขึ้นโดยใช้ React, TypeScript, Bun และ Elysia ในการพัฒนา โดยแบ่งออกเป็น 2 ส่วน ดังนี้
-### 1. Frontend เทคโนโลยีที่ใช้
+เกม Tetris นี้ถูกพัฒนาขึ้นโดยใช้ React, TypeScript, Bun และ Elysia ในการพัฒนาโดยจุดสำคัญของเกม Tetris นี้มีดังนี้
+### a. หัวใจสำคัญของเกม
+```plaintext
+// 1. บล็อก Tetris
+const TETROMINOES = {
+  I, J, L, O, S, T, Z  // บล็อกพื้นฐาน 7 แบบ
+};
+
+// 2. การเคลื่อนที่
+- เลื่อนซ้าย/ขวา (moveLeft, moveRight)
+- เลื่อนลง (moveDown)
+- หมุน (rotate)
+- Hard Drop (hardDrop)
+
+// 3. ระบบตรวจสอบการชน
+isValidMove(y: number, x: number, pieceMatrix: number[][]) 
+- ตรวจสอบขอบบอร์ด
+- ตรวจสอบการชนกับบล็อกอื่น
+```
+### b. ระบบคะแนน
+```plaintext
+// 1. การให้คะแนน
+- เคลียร์แถว: score += (lines * 100 * level)
+- Hard Drop: score += ((dropDistance) * 2)
+
+// 2. ระดับความยาก
+- เพิ่มระดับทุก 10 แถว
+- ความเร็วเพิ่มตามระดับ
+```
+### c. จุดเด่นในการพัฒนา
+```plaintext
+1. แยกส่วนการทำงานระหว่าง Game Logic และ UI อย่างชัดเจนทำให้ง่ายต่อการทดสอบและบำรุงรักษา
+2. แยก Game State และ Display State
+3. ยืนยันตัวตนผ่าน Firebase ด้วย Google Sign-in
+4. มีการเก็บประวัติคะแนนของผู้เล่น
+5. แสดงคะแนนสูงสุด 5 อันดับ ทำให้รองรับการแข่งขันผ่านระบบ High Scores
+6. มีการระบุประเทศของผู้เล่นโดยเก็บในรูปแบบ Country Code เช่น US, TH etc. ทำให้รองรับการแข่งขันในระดับประเทศ
+7. รองรับการขยายระบบในอนาคต
+```
+
+### เทคโนโลยีที่ใช้ แบ่งออกเป็น 2 ส่วน ดังนี้
+#### 1. Frontend เทคโนโลยีที่ใช้
 ```plaintext
 // Core Technologies
 - React           // JavaScript library สำหรับสร้าง UI
@@ -22,7 +62,7 @@ docker-compose up --build -d
 - GraphQL Client  // สื่อสารกับ Backend
 - Fetch API      // เรียกใช้ External APIs
 ```
-### 2. Backend + Database เทคโนโลยีที่ใช้
+#### 2. Backend + Database เทคโนโลยีที่ใช้
 ```plaintext
 // Core Technologies
 - Bun            // JavaScript runtime
@@ -38,31 +78,32 @@ docker-compose up --build -d
 - pg (node-pg)  // PostgreSQL client
 ```
 
-### A. โครงสร้างโปรเจค (Project Structure)
+### โครงสร้างเกมและ Diagram
+#### 1. โครงสร้างโปรเจค (Project Structure)
 ```plaintext
 tetris-game/                      # Root directory
 │
 ├── frontend/                     # Frontend application
 │   ├── src/
 │   │   ├── components/           # React components
-│   │   │   ├── GameBoard.tsx     # แสดงบอร์ดเกม
+│   │   │   ├── GameBoard.tsx     # แสดงผลเกม
 │   │   │   ├── HighScores.tsx    # แสดงคะแนนสูงสุด
 │   │   │   ├── NextPiece.tsx     # แสดงบล็อกถัดไป
 │   │   │   ├── ScoreModal.tsx    # Modal บันทึกคะแนน
 │   │   │   └── Auth.tsx          # ระบบ Google Sign-in
 │   │   │
 │   │   ├── hooks/                # Custom React hooks
-│   │   │   ├── useGameLogic.ts   # Game mechanics
+│   │   │   ├── useGameLogic.ts   # Logic การเล่นเกม
 │   │   │   └── useAuth.ts        # Authentication logic
 │   │   │
 │   │   ├── services/             # External services
-│   │   │   └── api.ts            # GraphQL client
+│   │   │   └── api.ts            # GraphQL API
 │   │   │
 │   │   ├── config/               # Configurations
 │   │   │   └── firebase.ts       # Firebase setup
 │   │   │
 │   │   ├── types.ts              # TypeScript types
-│   │   ├── constants.ts          # Game constants
+│   │   ├── constants.ts          # เก็บบล็อกพื้นฐานทั้ง 7 แบบ
 │   │   ├── App.tsx               # Main component
 │   │   └── main.tsx              # Entry point
 │   │
@@ -82,10 +123,10 @@ tetris-game/                      # Root directory
 │
 └── docker-compose.yml            # Docker composition
 ```
-### B. System Architecture Diagram
+### 2. System Architecture Diagram
 ![Tetris-System Architecture Diagram-2024-11-08-064000](https://github.com/user-attachments/assets/107bca38-43e6-4fdb-8f95-6eaff885cdf4)
 
-### C. Main Flow Sequence Diagram
+### 3. Main Flow Sequence Diagram
 ![Tetris-Main Flow Sequence Diagram-2024-11-08-064256](https://github.com/user-attachments/assets/cbd6beba-974f-44ab-a54c-7d727d79a442)
 
 ### A. แบ่งส่วนการทำงานตามโครงสร้าง (Separation of Concerns)
