@@ -49,33 +49,32 @@ isValidMove(y: number, x: number, pieceMatrix: number[][])
 #### 1. Frontend เทคโนโลยีที่ใช้
 ```plaintext
 // Core Technologies
-- React           // JavaScript library สำหรับสร้าง UI
-- TypeScript     // Typed JavaScript
-- Vite           // Build tool และ development server
-- Styled-components // CSS-in-JS library
+- React                // JavaScript library สำหรับสร้าง UI
+- TypeScript           // Typed JavaScript
+- Vite                 // Build tool และ development server
+- Styled-components    // CSS-in-JS library
 
 // Authentication
-- Firebase Auth   // ระบบ Google Sign-in
-- Firebase SDK   // Firebase JavaScript SDK
+- Firebase Auth        // ระบบ Google Sign-in
+- Firebase SDK         // Firebase JavaScript SDK
 
 // API Communication
-- GraphQL Client  // สื่อสารกับ Backend
-- Fetch API      // เรียกใช้ External APIs
+- GraphQL API          // ใช้สื่อสารกับ Backend
+- Fetch API            // เรียกใช้ External APIs
 ```
 #### 2. Backend + Database เทคโนโลยีที่ใช้
 ```plaintext
 // Core Technologies
-- Bun            // JavaScript runtime
-- Elysia        // Web framework สำหรับ Bun
-- TypeScript    // Type safety
+- Bun                 // JavaScript runtime
+- Elysia              // Web framework สำหรับ Bun
+- TypeScript          // Type safety
 
 // API Layer
-- GraphQL       // Query language
-- GraphQL Yoga  // GraphQL server implementation
+- GraphQL             // Query language
+- GraphQL Yoga        // GraphQL server implementation
 
 // Database
-- PostgreSQL    // Relational database
-- pg (node-pg)  // PostgreSQL client
+- PostgreSQL          // Relational database
 ```
 
 ### โครงสร้างเกมและ Diagram
@@ -97,7 +96,7 @@ tetris-game/                      # Root directory
 │   │   │   └── useAuth.ts        # Authentication logic
 │   │   │
 │   │   ├── services/             # External services
-│   │   │   └── api.ts            # GraphQL API
+│   │   │   └── api.ts            # GraphQL APIs + External APIs
 │   │   │
 │   │   ├── config/               # Configurations
 │   │   │   └── firebase.ts       # Firebase setup
@@ -129,49 +128,7 @@ tetris-game/                      # Root directory
 ### 3. Main Flow Sequence Diagram
 ![Tetris-Main Flow Sequence Diagram-2024-11-08-064256](https://github.com/user-attachments/assets/cbd6beba-974f-44ab-a54c-7d727d79a442)
 
-### A. แบ่งส่วนการทำงานตามโครงสร้าง (Separation of Concerns)
-1. Frontend
-```typescript
-- Components/        // UI Components
-  - GameBoard       // แสดงบอร์ดเกม
-  - NextPiece       // แสดงบล็อกถัดไป
-  - HighScores      // แสดงคะแนนสูงสุด
-  - ScoreModal      // บันทึกคะแนน
-  - Auth            // ระบบ Google Sign-in
-
-- Hooks/            // Business Logic
-  - useGameLogic    // Logic เกม
-  - useAuth         // Logic Authentication
-
-- Services/         // External Communications
-  - api.ts         // GraphQL client
-
-- Config/           // Configurations
-  - firebase.ts    // Firebase setup
-```
-
-2. Backend
-```typescript
-- GraphQL Server    // API Endpoint
-- Database Layer    // Data Persistence
-- External Services // Third-party APIs
-```
-
-### B. State Management
-```typescript
-1. Game State:
-- board: Cell[][]          // สถานะบอร์ด
-- currentPiece: Piece      // บล็อกปัจจุบัน
-- nextPiece: Piece        // บล็อกถัดไป
-- score: number          // คะแนน
-- level: number         // ระดับ
-
-2. Auth State:
-- user: User | null    // ข้อมูลผู้ใช้
-- isAuthenticated: boolean
-```
-
-### C. Database Design
+### 4. Database Design
 ```sql
 -- Scores Table
 CREATE TABLE scores (
@@ -181,42 +138,6 @@ CREATE TABLE scores (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   country_code VARCHAR(2) DEFAULT 'UN'
 );
-```
-
-### D. Container Architecture
-```yaml
-services:
-  frontend:  # React Application
-  backend:   # GraphQL Server
-  database:  # PostgreSQL
-```
-
-### E. Security
-```typescript
-1. Authentication:
-- Google OAuth
-- Firebase Auth
-
-2. Data Validation:
-- Input sanitization
-- Type checking
-
-3. Error Handling:
-- Try-catch blocks
-- Error boundaries
-```
-
-### F. Performance Optimization
-```typescript
-1. Frontend:
-- Memoization
-- Efficient re-rendering
-- Asset optimization
-
-2. Backend:
-- Connection pooling
-- Query optimization
-- Caching strategies
 ```
 
 ## 2. API ที่สำคัญ
