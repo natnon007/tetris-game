@@ -13,6 +13,7 @@ const StyledBoard = styled.div`
   padding: 0.5rem;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  margin: 0 auto; // จัดให้อยู่กึ่งกลาง
 `;
 
 const Cell = styled.div<{ $filled: boolean; $type: string | null }>`

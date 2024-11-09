@@ -8,7 +8,10 @@ const Container = styled.div`
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin-top: 1rem;
+  width: 100%; // ให้ใช้ความกว้างเต็ม parent
+  height: 250px; // กำหนดความสูงคงที่
+  // margin-top: 1rem;
+  overflow-y: auto; // เพิ่ม scroll เมื่อเนื้อหาเกิน
 `;
 
 const Title = styled.h3`

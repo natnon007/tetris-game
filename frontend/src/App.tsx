@@ -9,14 +9,42 @@ import { Auth } from './components/Auth';
 import { About } from './components/About';
 
 const Container = styled.div`
+  /* กำหนดขนาดคงที่ */
+  width: 1200px;  // ขนาดความกว้างคงที่
+  height: min(800px, 100vh - 2rem); // ใช้ min เพื่อให้ไม่เกินความสูงหน้าจอ และเว้นขอบ 1rem
+  
+  /* จัดตำแหน่งให้อยู่กลางหน้าจอ */
+  position: fixed;
+  top: 1rem; // เว้นระยะจากขอบบน
+  left: 50%;
+  transform: translateX(-50%); // ใช้แค่ translateX เพื่อไม่ให้กระทบกับ top
+  
+  /* สไตล์อื่นๆ คงเดิม */
   display: flex;
-  height: 100vh;
   padding: 1rem;
   background: #282c34;
   color: white;
   justify-content: center;
   gap: 2rem;
   align-items: center;
+
+  /* ป้องกันการเลื่อน */
+  overflow: hidden;
+  
+  /* เพิ่ม min sizes */
+  min-width: 1000px;
+  min-height: 600px;
+`;
+
+// เพิ่ม wrapper component เพื่อจัดการ background ของทั้งหน้า
+const PageWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background: #1a1d23;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden; // ป้องกันการเลื่อน
 `;
 
 const LeftPanel = styled.div`
@@ -196,6 +224,7 @@ const App: React.FC = () => {
   };
 
   return (
+    <PageWrapper>
     <Container>
       <About 
         logoUrl="https://github.com/user-attachments/assets/74eebfd7-722e-451b-8e2a-69804c2155ab"
@@ -278,6 +307,7 @@ const App: React.FC = () => {
         />
       )}
     </Container>
+    </PageWrapper>
   );
 };
 

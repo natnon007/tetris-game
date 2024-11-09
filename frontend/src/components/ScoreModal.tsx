@@ -13,7 +13,7 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 2000; // เพิ่ม z-index ให้อยู่ด้านบนสุด
 `;
 
 const Modal = styled.div`
@@ -21,9 +21,17 @@ const Modal = styled.div`
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  width: 100%;
+  width: 90%;
   max-width: 400px;
   text-align: center;
+  max-height: calc(100vh - 4rem); // ป้องกันไม่ให้สูงเกินหน้าจอ
+  overflow-y: auto; // เพิ่ม scroll ถ้าเนื้อหาเกิน
+  
+  /* จัดให้อยู่กลางแนวตั้งและแนวนอน */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const Title = styled.h2`

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 1rem;
-  left: 1rem;
+  left: calc(50% - 580px); // -(1200px/2 - 20px)
   display: flex;
   align-items: center;
   gap: 1rem;
-  z-index: 100;
+  z-index: 1001;
+  max-height: 48px; // กำหนดความสูงสูงสุด
 `;
 
 const Logo = styled.a`

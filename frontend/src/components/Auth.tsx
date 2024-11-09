@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { useAuth } from '../hooks/useAuth';
 
 const AuthContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 1rem;
-  right: 1rem;
+  right: calc(50% - 580px); // -(1200px/2 - 20px)
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -14,6 +14,8 @@ const AuthContainer = styled.div`
   background: #1a1d23;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  max-height: 48px; // กำหนดความสูงสูงสุด
 `;
 
 const UserName = styled.span`

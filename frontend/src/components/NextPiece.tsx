@@ -8,6 +8,7 @@ const Container = styled.div`
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 100%; // ให้ใช้ความกว้างเต็ม parent
 `;
 
 const Title = styled.h3`
@@ -19,8 +20,8 @@ const Title = styled.h3`
 
 const PreviewArea = styled.div`
   display: grid;
-  grid-template-rows: repeat(4, 25px);
-  grid-template-columns: repeat(4, 25px);
+  grid-template-rows: repeat(4, 30px); // เพิ่มขนาดจาก 25px
+  grid-template-columns: repeat(4, 30px); // เพิ่มขนาดจาก 25px
   gap: 1px;
   background: #111;
   padding: 10px;
