@@ -2,7 +2,7 @@
 
 docker-compose up --build -d
 
-![image](https://github.com/user-attachments/assets/51d06cae-23bf-4a7d-aa45-ebd2edc030a6)
+![image](https://github.com/user-attachments/assets/76dd1cc6-4462-4644-9e0b-f09909ca19e1)
 
 ## 1. หลักการพัฒนา
 เกม Tetris นี้ถูกพัฒนาขึ้นโดยใช้ React, TypeScript, Bun และ Elysia ในการพัฒนาโดยจุดสำคัญของเกม Tetris นี้มีดังนี้
