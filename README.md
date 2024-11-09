@@ -259,7 +259,48 @@ interface ErrorHandler {
 }
 ```
 ## 3. วิธี Deploy
-**Demo:** http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:5173/
+### 1. Clone Source Code ใช้คำสั่ง
+```typescript
+sudo git clone https://github.com/natnon007/tetris-game.git
+```
+### 2. ตั้งค่า Firebase Authentication
+สร้างไฟล์ .env ใน ./tetris-game/frontend/ และเพิ่มข้อมูลลงในไฟล์ .env ดังนี้
+```typescript
+VITE_FIREBASE_API_KEY = YOUR_API_KEY
+VITE_FIREBASE_AUTH_DOMAIN = YOUR_AUTH_DOMAIN
+VITE_FIREBASE_PROJECT_ID = YOUR_PROJECT_ID
+VITE_FIREBASE_STORAGE_BUCKET = YOUR_STORAGE_BUCKET
+VITE_FIREBASE_MESSAGING_SENDER_ID = YOUR_MESSAGING_SENDER_ID
+VITE_FIREBASE_APP_ID = YOUR_APP_ID
+VITE_FIREBASE_MEASUREMENT_ID = YOUR_MEASUREMENT_ID
+```
+วิธีได้รับค่าจาก FIREBASE สำหรับใสในไฟล์ .env
+```plaintext
+1. ไปที่ https://console.firebase.google.com/
+2. สร้างโปรเจคใหม่
+3. ไปที่ Authentication -> Sign-in method
+4. เปิดใช้งาน Google provider
+5. เพิ่ม domain ที่อนุญาต (localhost สำหรับ development)
+```
+### 3. แก้ไขค่า VITE_BACKEND_URL ใน docker-compose.yml ใช้คำสั่ง (ข้ามข้อนี้ถ้าใช้ localhost)
+```typescript
+1. cd tetris-game/
+2. sudo nano docker-compose.yml
+```
+### 4. เริ่มการทำงาน ใช้คำสั่ง
+```typescript
+sudo docker-compose up --build -d
+```
+### 5. กรณีหยุดการทำงาน ใช้คำสั่ง
+```typescript
+sudo docker-compose down
+```
+หรือ
+```typescript
+sudo docker-compose down -v
+```
+
+**ตัวอย่าง** http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:5173/
 
 ## About
 <a href="https://grad.dpu.ac.th/" target="_blank">
