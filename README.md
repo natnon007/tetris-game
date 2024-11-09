@@ -122,13 +122,13 @@ tetris-game/                      # Root directory
 │
 └── docker-compose.yml            # Docker composition
 ```
-### 2. System Architecture Diagram
+#### 2. System Architecture Diagram
 ![Tetris-System Architecture Diagram-2024-11-08-064000](https://github.com/user-attachments/assets/107bca38-43e6-4fdb-8f95-6eaff885cdf4)
 
-### 3. Main Flow Sequence Diagram
+#### 3. Main Flow Sequence Diagram
 ![Tetris-Main Flow Sequence Diagram-2024-11-08-064256](https://github.com/user-attachments/assets/cbd6beba-974f-44ab-a54c-7d727d79a442)
 
-### 4. Database Design
+#### 4. Database Design
 ```sql
 -- Scores Table
 CREATE TABLE scores (
