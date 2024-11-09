@@ -55,8 +55,213 @@ tetris-game/                      # Root directory
 ### C. Main Flow Sequence Diagram
 ![Tetris-Main Flow Sequence Diagram-2024-11-08-064256](https://github.com/user-attachments/assets/cbd6beba-974f-44ab-a54c-7d727d79a442)
 
+### A. การแบ่งส่วนการทำงาน (Separation of Concerns)
+1. Frontend
+```typescript
+- Components/        // UI Components
+  - GameBoard       // แสดงบอร์ดเกม
+  - NextPiece       // แสดงบล็อกถัดไป
+  - HighScores      // แสดงคะแนนสูงสุด
+  - ScoreModal      // บันทึกคะแนน
+  - Auth            // ระบบ Google Sign-in
+
+- Hooks/            // Business Logic
+  - useGameLogic    // Logic เกม
+  - useAuth         // Logic Authentication
+
+- Services/         // External Communications
+  - api.ts         // GraphQL client
+
+- Config/           // Configurations
+  - firebase.ts    // Firebase setup
+```
+
+2. Backend
+```typescript
+- GraphQL Server    // API Endpoint
+- Database Layer    // Data Persistence
+- External Services // Third-party APIs
+```
+
+### B. State Management
+```typescript
+1. Game State:
+- board: Cell[][]          // สถานะบอร์ด
+- currentPiece: Piece      // บล็อกปัจจุบัน
+- nextPiece: Piece        // บล็อกถัดไป
+- score: number          // คะแนน
+- level: number         // ระดับ
+
+2. Auth State:
+- user: User | null    // ข้อมูลผู้ใช้
+- isAuthenticated: boolean
+```
+
+### C. Database Design
+```sql
+-- Scores Table
+CREATE TABLE scores (
+  id SERIAL PRIMARY KEY,
+  player_name VARCHAR(50) NOT NULL,
+  score INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  country_code VARCHAR(2) DEFAULT 'UN'
+);
+
+-- Indexes
+CREATE INDEX idx_scores_ranking ON scores (score DESC, created_at ASC);
+```
+
+### D. Container Architecture
+```yaml
+services:
+  frontend:  # React Application
+  backend:   # GraphQL Server
+  database:  # PostgreSQL
+```
+
+### E. Security
+```typescript
+1. Authentication:
+- Google OAuth
+- Firebase Auth
+
+2. Data Validation:
+- Input sanitization
+- Type checking
+
+3. Error Handling:
+- Try-catch blocks
+- Error boundaries
+```
+
+### F. Performance Optimization
+```typescript
+1. Frontend:
+- Memoization
+- Efficient re-rendering
+- Asset optimization
+
+2. Backend:
+- Connection pooling
+- Query optimization
+- Caching strategies
+```
+
 ## 2. API ที่สำคัญ
+### A. Game Core APIs
+```typescript
+interface GameLogicAPI {
+  // State
+  board: Cell[][]
+  score: number
+  level: number
+  gameOver: boolean
   
+  // Actions
+  startGame(): void
+  moveDown(): void
+  rotate(): void
+  hardDrop(): void
+}
+```
+
+### B. Authentication APIs
+```typescript
+interface AuthAPI {
+  user: User | null
+  signIn(): Promise<void>
+  signOut(): Promise<void>
+}
+```
+
+### C. GraphQL APIs
+```graphql
+# Queries
+query GetHighScores {
+  highScores(limit: Int): [Score!]!
+}
+
+# Mutations
+mutation SubmitScore {
+  submitScore(
+    player_name: String!
+    score: Int!
+    ip: String!
+  ): Score!
+}
+```
+
+### D. Database APIs
+```typescript
+interface DatabaseAPI {
+  getHighScores(limit: number): Promise<Score[]>
+  insertScore(data: ScoreData): Promise<Score>
+  updateRanks(): Promise<void>
+}
+```
+
+### E. External Service APIs
+```typescript
+// IP & Location APIs
+interface LocationAPI {
+  getPlayerIP(): Promise<string>
+  getCountryFromIP(ip: string): Promise<string>
+}
+
+// Flag CDN API
+getFlagUrl(countryCode: string): string
+```
+
+### F. User Interface APIs
+```typescript
+// Component Props
+interface GameBoardProps {
+  board: Cell[][]
+}
+
+interface ScoreModalProps {
+  score: number
+  onSubmitted(): void
+}
+```
+
+### G. Type Definitions
+```typescript
+interface Cell {
+  type: TetrominoType | null
+  filled: boolean
+}
+
+type TetrominoType = 'I' | 'J' | 'L' | 'O' | 'S' | 'T' | 'Z'
+
+interface Score {
+  id: string
+  player_name: string
+  score: number
+  rank: number
+  country_code: string
+}
+```
+
+### H. Firebase Config API
+```typescript
+interface FirebaseConfig {
+  apiKey: string
+  authDomain: string
+  projectId: string
+  appId: string
+}
+```
+
+### I. Error Handling APIs
+```typescript
+interface ErrorHandler {
+  handleGameError(error: Error): void
+  handleAuthError(error: Error): void
+  handleAPIError(error: Error): void
+}
+```
 ## 3. วิธี Deploy
 
 ## 4. About
