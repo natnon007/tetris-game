@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react'; // เพิ่ม useCallback
 import styled from 'styled-components';
 import { GameBoard } from './components/GameBoard';
 import { HighScores } from './components/HighScores';
@@ -208,10 +208,13 @@ const App: React.FC = () => {
     displayBoard, 
     linesCleared, 
     level,
-    nextPiece
+    nextPiece,
+    isGameStarted  // เพิ่ม state นี้ใน useGameLogic
   } = useGameLogic();
   
   const [showScoreModal, setShowScoreModal] = useState(false);
+  const [wasPaused, setWasPaused] = useState(false);  // เพิ่ม state เก็บสถานะ pause ก่อนหน้า
+  const [aboutOpen, setAboutOpen] = useState(false); // เพิ่ม state ใหม่
 
   useEffect(() => {
     if (gameOver && score > 0) {
@@ -219,9 +222,36 @@ const App: React.FC = () => {
     }
   }, [gameOver, score]);
 
+  // เพิ่ม effect เพื่อรีเซ็ต wasPaused เมื่อเริ่มเกมใหม่
+  useEffect(() => {
+    if (isGameStarted) {
+      setWasPaused(false);
+    }
+  }, [isGameStarted]);
+
   const handleScoreSubmitted = () => {
     setShowScoreModal(false);
   };
+
+  // ปรับปรุงฟังก์ชันจัดการ pause สำหรับ About modal
+  const handleAboutOpen = useCallback(() => {
+    if (isGameStarted && !gameOver && !isPaused) {
+      togglePause();
+    }
+    setWasPaused(isPaused);
+  }, [isGameStarted, gameOver, isPaused, togglePause]);
+  
+  const handleAboutClose = useCallback(() => {
+    if (isGameStarted && !gameOver && !wasPaused && isPaused) {
+      togglePause();
+    }
+  }, [isGameStarted, gameOver, wasPaused, isPaused, togglePause]);
+
+  // แยกฟังก์ชันสำหรับการเริ่มเกมใหม่
+  const handleStartGame = useCallback(() => {
+    setWasPaused(false);
+    startGame();
+  }, [startGame]);
 
   return (
     <PageWrapper>
@@ -229,10 +259,12 @@ const App: React.FC = () => {
       <About 
         logoUrl="https://github.com/user-attachments/assets/74eebfd7-722e-451b-8e2a-69804c2155ab"
         logoLink="https://cite.dpu.ac.th/"
+        onModalOpen={handleAboutOpen}
+        onModalClose={handleAboutClose}
       />
       <Auth />  {/* เพิ่ม Auth component */}
       <LeftPanel>
-        <Button onClick={startGame} disabled={showScoreModal}>
+        <Button onClick={handleStartGame} disabled={showScoreModal}>
           {gameOver ? "Start New Game" : "Restart Game"}
         </Button>
         

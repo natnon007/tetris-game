@@ -19,6 +19,7 @@ export const useGameLogic = () => {
   const [linesCleared, setLinesCleared] = useState(0);
   const [level, setLevel] = useState(1);
   const [gameOver, setGameOver] = useState(true);
+  const [isGameStarted, setIsGameStarted] = useState(false);  // เพิ่ม state ใหม่
   const [currentPiece, setCurrentPiece] = useState<{
     type: TetrominoType;
     position: [number, number];
@@ -39,15 +40,16 @@ export const useGameLogic = () => {
     setLevel(1);
     setGameOver(false);
     setIsPaused(false);
+    setIsGameStarted(true);  // ตั้งค่าเมื่อเริ่มเกม
     setNextPiece(getRandomPiece());
     spawnPiece();
   }, []);
 
   const togglePause = useCallback(() => {
-    if (!gameOver && currentPiece) {
+    if (!gameOver && currentPiece && isGameStarted) {  // เพิ่มเงื่อนไข isGameStarted
       setIsPaused(prev => !prev);
     }
-  }, [gameOver, currentPiece]);
+  }, [gameOver, currentPiece, isGameStarted]);  // เพิ่ม isGameStarted ในรายการ dependencies
 
   const spawnPiece = useCallback(() => {
     if (!nextPiece) {
@@ -200,6 +202,7 @@ export const useGameLogic = () => {
           if (cell) {
             if (y + dy <= 0) {
               setGameOver(true);
+              setIsGameStarted(false);  // เพิ่มบรรทัดนี้
               return;
             }
             newBoard[y + dy][x + dx] = {
@@ -242,6 +245,7 @@ export const useGameLogic = () => {
         if (cell) {
           if (newY + dy <= 0) {
             setGameOver(true);
+            setIsGameStarted(false);  // เพิ่มบรรทัดนี้
             return;
           }
           newBoard[newY + dy][x + dx] = {
@@ -335,6 +339,7 @@ export const useGameLogic = () => {
     score,
     gameOver,
     isPaused,
+    isGameStarted,  // เพิ่ม state ใหม่ใน return object
     startGame,
     togglePause,
     linesCleared,

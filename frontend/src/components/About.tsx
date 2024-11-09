@@ -147,6 +147,8 @@ interface Props {
   logoUrl: string;
   logoLink: string;
   readmeUrl: string;
+  onModalOpen?: () => void;  // เพิ่ม prop สำหรับ pause game
+  onModalClose?: () => void; // เพิ่ม prop สำหรับ resume game
 }
 
 
@@ -167,7 +169,9 @@ const decodeBase64 = (str: string): string => {
 export const About: React.FC<Props> = ({ 
   logoUrl, 
   logoLink,
-  readmeUrl = 'https://api.github.com/repos/natnon007/tetris-game/contents/README.md' 
+  readmeUrl = 'https://api.github.com/repos/natnon007/tetris-game/contents/README.md',
+  onModalOpen,
+  onModalClose 
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState('');
@@ -210,8 +214,15 @@ export const About: React.FC<Props> = ({
     }
   }, [isOpen, content, readmeUrl]);
 
-  const createMarkup = () => {
-    return { __html: content };
+  // ปรับ handlers ให้เรียกใช้ callback ก่อนเปลี่ยน state
+  const handleModalOpen = () => {
+    onModalOpen?.();
+    setIsOpen(true);
+  };
+
+  const handleModalClose = () => {
+    onModalClose?.();
+    setIsOpen(false);
   };
 
   return (
@@ -220,21 +231,21 @@ export const About: React.FC<Props> = ({
       <Logo href={logoLink} target="_blank" rel="noopener noreferrer">
           <img src={logoUrl} alt="Logo" />
         </Logo>
-        <AboutButton onClick={() => setIsOpen(true)}>
+        <AboutButton onClick={handleModalOpen}>
           About
         </AboutButton>
       </HeaderContainer>
 
       {isOpen && (
-        <ModalOverlay onClick={() => setIsOpen(false)}>
+        <ModalOverlay onClick={handleModalClose}>
           <ModalContent onClick={e => e.stopPropagation()}>
-            <CloseButton onClick={() => setIsOpen(false)}>×</CloseButton>
+            <CloseButton onClick={handleModalClose}>×</CloseButton>
             {loading ? (
               <LoadingSpinner>Loading...</LoadingSpinner>
             ) : error ? (
               <ErrorMessage>{error}</ErrorMessage>
             ) : (
-              <div dangerouslySetInnerHTML={createMarkup()} />
+              <div dangerouslySetInnerHTML={{ __html: content }} />
             )}
           </ModalContent>
         </ModalOverlay>
