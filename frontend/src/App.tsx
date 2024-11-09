@@ -6,6 +6,7 @@ import { ScoreModal } from './components/ScoreModal';
 import { NextPiece } from './components/NextPiece';
 import { useGameLogic } from './hooks/useGameLogic';
 import { Auth } from './components/Auth';
+import { About } from './components/About';
 
 const Container = styled.div`
   display: flex;
@@ -196,6 +197,10 @@ const App: React.FC = () => {
 
   return (
     <Container>
+      <About 
+        logoUrl="https://github.com/user-attachments/assets/74eebfd7-722e-451b-8e2a-69804c2155ab"
+        logoLink="https://cite.dpu.ac.th/"
+      />
       <Auth />  {/* เพิ่ม Auth component */}
       <LeftPanel>
         <Button onClick={startGame} disabled={showScoreModal}>
