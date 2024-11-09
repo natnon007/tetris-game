@@ -85,11 +85,12 @@ tetris-game/                      # Root directory
 ├── frontend/                     # Frontend application
 │   ├── src/
 │   │   ├── components/           # React components
+│   │   │   ├── About.tsx         # แสดงหน้า about
+│   │   │   ├── Auth.tsx          # ระบบ Google Sign-in
 │   │   │   ├── GameBoard.tsx     # แสดงผลเกม
 │   │   │   ├── HighScores.tsx    # แสดงคะแนนสูงสุด
 │   │   │   ├── NextPiece.tsx     # แสดงบล็อกถัดไป
-│   │   │   ├── ScoreModal.tsx    # Modal บันทึกคะแนน
-│   │   │   └── Auth.tsx          # ระบบ Google Sign-in
+│   │   │   └── ScoreModal.tsx    # Modal บันทึกคะแนน
 │   │   │
 │   │   ├── hooks/                # Custom React hooks
 │   │   │   ├── useGameLogic.ts   # Logic การเล่นเกม
