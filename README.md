@@ -5,6 +5,9 @@ docker-compose up --build -d
 ![image](https://github.com/user-attachments/assets/51d06cae-23bf-4a7d-aa45-ebd2edc030a6)
 
 ## 1. หลักการพัฒนา
+
+
+
 ### A. การจัดโครงสร้างโปรเจค (Project Structure)
 ```plaintext
 tetris-game/                      # Root directory
