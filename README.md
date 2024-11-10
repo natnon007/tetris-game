@@ -206,7 +206,7 @@ interface LocationAPI {
 getFlagUrl(countryCode: string): string
 ```
 
-### H. Firebase Config API
+### F. Firebase Config API
 ```typescript
 interface FirebaseConfig {
   apiKey: string
