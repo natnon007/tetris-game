@@ -206,37 +206,6 @@ interface LocationAPI {
 getFlagUrl(countryCode: string): string
 ```
 
-### F. User Interface APIs
-```typescript
-// Component Props
-interface GameBoardProps {
-  board: Cell[][]
-}
-
-interface ScoreModalProps {
-  score: number
-  onSubmitted(): void
-}
-```
-
-### G. Type Definitions
-```typescript
-interface Cell {
-  type: TetrominoType | null
-  filled: boolean
-}
-
-type TetrominoType = 'I' | 'J' | 'L' | 'O' | 'S' | 'T' | 'Z'
-
-interface Score {
-  id: string
-  player_name: string
-  score: number
-  rank: number
-  country_code: string
-}
-```
-
 ### H. Firebase Config API
 ```typescript
 interface FirebaseConfig {
@@ -247,14 +216,6 @@ interface FirebaseConfig {
 }
 ```
 
-### I. Error Handling APIs
-```typescript
-interface ErrorHandler {
-  handleGameError(error: Error): void
-  handleAuthError(error: Error): void
-  handleAPIError(error: Error): void
-}
-```
 ## 3. วิธี Deploy
 ### 1. Clone Source Code ใช้คำสั่ง
 ```typescript
