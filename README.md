@@ -247,6 +247,8 @@ VITE_FIREBASE_MEASUREMENT_ID = YOUR_MEASUREMENT_ID
 ```typescript
 1. cd tetris-game/
 2. sudo nano docker-compose.yml
+3. ใส่ URL ของ Backend
+4. ctrl+x, กด y เพื่อบันทึก
 ```
 ### 4. เริ่มการทำงาน ใช้คำสั่ง
 ```typescript
