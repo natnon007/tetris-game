@@ -29,8 +29,7 @@ isValidMove(y: number, x: number, pieceMatrix: number[][])
 - Hard Drop: score += ((dropDistance) * 2)
 
 2. ระดับความยาก
-- เพิ่มระดับทุก 10 แถว
-- ความเร็วเพิ่มตามระดับ
+- เพิ่มระดับ Level ทุก 10 แถว
 ```
 ### c. จุดเด่นในการพัฒนา
 ```plaintext
