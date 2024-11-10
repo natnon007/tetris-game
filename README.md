@@ -220,7 +220,7 @@ interface FirebaseConfig {
 ```
 
 ## 3. วิธี Deploy
-### 1. Clone Source Code ใช้คำสั่ง
+### 1. Clone Project ใช้คำสั่ง
 ```typescript
 sudo git clone https://github.com/natnon007/tetris-game.git
 ```
@@ -270,7 +270,7 @@ sudo docker-compose down -v
 <a href="https://cite.dpu.ac.th/" target="_blank">
     <img src="https://github.com/user-attachments/assets/74eebfd7-722e-451b-8e2a-69804c2155ab" alt="cite" width="160" />
 </a><br><br>
-Source Code นี้เป็นส่วนหนึ่งของวิชา CT648 - วิศวกรรมเว็บและคลาวด์<br>
+Project นี้เป็นส่วนหนึ่งของวิชา CT648 - วิศวกรรมเว็บและคลาวด์<br>
 หลักสูตรวิศวกรรมศาสตรมหาบัณฑิต สาขาวิศวกรรมคอมพิวเตอร์<br>
 วิทยาลัยวิศวกรรมศาสตร์และเทคโนโลยี มหาวิทยาลัยธุรกิจบัณฑิตย์<br>
 นักศึกษาผู้พัฒนา: ณัฐนนท์ แสงจันทร์ ID: 66130537<br>
