@@ -3,7 +3,7 @@
 ![image](https://github.com/user-attachments/assets/76dd1cc6-4462-4644-9e0b-f09909ca19e1)
 
 ## 1. หลักการพัฒนา
-เกม Tetris นี้ถูกพัฒนาขึ้นโดยใช้ React, TypeScript, Bun และ Elysia ในการพัฒนาโดยจุดสำคัญของเกม Tetris นี้มีดังนี้
+เกม Tetris นี้ถูกพัฒนาขึ้นโดยใช้ Vite+React, TypeScript, Bun และ Elysia ในการพัฒนาโดยจุดสำคัญของเกม Tetris นี้มีดังนี้
 ### a. หัวใจสำคัญของเกม
 ```plaintext
 1. บล็อก Tetris
@@ -212,7 +212,10 @@ interface FirebaseConfig {
   apiKey: string
   authDomain: string
   projectId: string
+  storageBucket: string
+  messagingId: int
   appId: string
+  measurementId: string
 }
 ```
 
