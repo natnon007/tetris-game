@@ -270,7 +270,7 @@ sudo docker-compose down -v
 Source Code นี้เป็นส่วนหนึ่งของวิชา CT648 - วิศวกรรมเว็บและคลาวด์<br>
 หลักสูตรวิศวกรรมศาสตรมหาบัณฑิต สาขาวิศวกรรมคอมพิวเตอร์<br>
 วิทยาลัยวิศวกรรมศาสตร์และเทคโนโลยี มหาวิทยาลัยธุรกิจบัณฑิตย์<br>
-นักศึกษา: ณัฐนนท์ แสงจันทร์ ID: 66130537<br>
+นักศึกษาผู้พัฒนา: ณัฐนนท์ แสงจันทร์ ID: 66130537<br>
 <a href="https://cite.dpu.ac.th/ct/master-ct/research_chaiyaporn.html" target="_blank">
     <img src="https://github.com/user-attachments/assets/607199c1-9426-4ebd-89f6-a8bfe342f26f" alt="advisor" width="160" />
 </a><br>
