@@ -219,10 +219,10 @@ interface FirebaseConfig {
 }
 ```
 
-## 3. วิธี Deploy
+## 3. Build & Deploy
 ### 1. Clone Project ใช้คำสั่ง
-```typescript
-sudo git clone https://github.com/natnon007/tetris-game.git
+```sh
+$ sudo git clone https://github.com/natnon007/tetris-game.git
 ```
 ### 2. ตั้งค่า Firebase Authentication
 สร้างไฟล์ .env ใน ./tetris-game/frontend/ และเพิ่มข้อมูลลงในไฟล์ .env ดังนี้
@@ -251,19 +251,20 @@ VITE_FIREBASE_MEASUREMENT_ID = YOUR_MEASUREMENT_ID
 4. ctrl+x, กด y เพื่อบันทึก
 ```
 ### 4. เริ่มการทำงาน ใช้คำสั่ง
-```typescript
-sudo docker-compose up --build -d
+```sh
+$ sudo docker-compose up --build -d
 ```
 ### 5. กรณีหยุดการทำงาน ใช้คำสั่ง
-```typescript
-sudo docker-compose down
+```sh
+$ sudo docker-compose down
 ```
 หรือ
-```typescript
-sudo docker-compose down -v
+```sh
+$ sudo docker-compose down -v
 ```
 
-**ตัวอย่าง** http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:5173/
+## Demo site
+http://ec2-3-7-254-26.ap-south-1.compute.amazonaws.com:5173/
 
 ## About
 <a href="https://grad.dpu.ac.th/" target="_blank">
