@@ -201,9 +201,58 @@ interface LocationAPI {
   getPlayerIP(): Promise<string>
   getCountryFromIP(ip: string): Promise<string>
 }
-
 // Flag CDN API
 getFlagUrl(countryCode: string): string
+```
+#### 1. getPlayerIP() : ทำหน้าที่ค้นหา Public IP Address ของผู้เล่น
+API:
+```
+URL: https://api.ipify.org?format=json
+```
+Return:
+```
+{
+  "ip": "Your IP Address"
+}
+```
+ตัวอย่าง Code:
+```typescript
+const getPlayerIP = async (): Promise<string> => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  } catch (error) {
+    console.error('Error fetching IP:', error);
+    return '0.0.0.0';
+  }
+};
+```
+#### 2. getFlagUrl(countryCode: string) : ทำหน้าที่ดึงรูปธงชาติโดยใช้ countryCode เช่น th, us
+API:
+```
+URL: https://flagcdn.com/w40/${score.country_code.toLowerCase()}.png
+```
+Return:
+```
+รูปภาพธงชาติ  เช่น
+countryCode = th
+https://flagcdn.com/w40/th.png
+countryCode = us
+https://flagcdn.com/w40/us.png
+
+```
+ตัวอย่าง Code:
+```typescript
+<Flag 
+  src={`https://flagcdn.com/w40/${score.country_code.toLowerCase()}.png`}
+  alt={score.country_code}
+  title={score.country_code}
+  onError={(e) => {
+    // ถ้าโหลดธงไม่สำเร็จ ใช้ธง UN แทน
+    (e.target as HTMLImageElement).src = 'https://flagcdn.com/w40/un.png';
+  }}
+/>
 ```
 
 ### F. Firebase Config API
