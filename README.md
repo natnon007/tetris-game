@@ -373,8 +373,5 @@ Project นี้เป็นส่วนหนึ่งของวิชา CT
 </a><br>
 อาจารย์ที่ปรีกษา: ผู้ช่วยศาสตราจารย์ ดร.ชัยพร เขมะภาตะพันธ์<br>
 <a href="https://github.com/natnon007/tetris-game" target="_blank">
-    <img src="https://github.com/user-attachments/assets/53b496c6-6244-4eb6-b209-84fdc9350df3" alt="github" width="160" />
-</a><br>
-<a href="https://github.com/natnon007/tetris-game" target="_blank">
-    Github
+    <img src="https://github.com/user-attachments/assets/53b496c6-6244-4eb6-b209-84fdc9350df3" alt="github" />
 </a><br>
