@@ -205,17 +205,17 @@ interface LocationAPI {
 getFlagUrl(countryCode: string): string
 ```
 #### 1. getPlayerIP() : ทำหน้าที่ค้นหา Public IP Address ของผู้เล่น
-API:
+**API:**
 ```
 URL: https://api.ipify.org?format=json
 ```
-Return:
+**Return:**
 ```
 {
   "ip": "Your IP Address"
 }
 ```
-ตัวอย่าง Code:
+**ตัวอย่าง Code:**
 ```typescript
 const getPlayerIP = async (): Promise<string> => {
   try {
@@ -229,11 +229,11 @@ const getPlayerIP = async (): Promise<string> => {
 };
 ```
 #### 2. getFlagUrl(countryCode: string) : ทำหน้าที่ดึงรูปธงชาติโดยใช้ countryCode เช่น th, us
-API:
+**API:**
 ```
 URL: https://flagcdn.com/w40/${score.country_code.toLowerCase()}.png
 ```
-Return:
+**Return:**
 ```
 รูปภาพธงชาติ  เช่น
 countryCode = th
@@ -242,7 +242,7 @@ countryCode = us
 https://flagcdn.com/w40/us.png
 
 ```
-ตัวอย่าง Code:
+**ตัวอย่าง Code:**
 ```typescript
 <Flag 
   src={`https://flagcdn.com/w40/${score.country_code.toLowerCase()}.png`}
