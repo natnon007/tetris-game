@@ -255,17 +255,59 @@ https://flagcdn.com/w40/us.png
 />
 ```
 
-### F. Firebase Config API
+### F. Firebase Authentication API คือ บริการที่ช่วยให้นักพัฒนาสามารถเพิ่มฟีเจอร์การยืนยันตัวตน (Authentication) ให้กับแอปพลิเคชันได้อย่างง่ายดายและปลอดภัย โดยรองรับหลายวิธีการล็อกอิน เช่น การใช้อีเมลและรหัสผ่าน, บัญชีโซเชียลมีเดีย เป็นต้น
+#### โครงสร้าง FirebaseConfig
 ```typescript
 interface FirebaseConfig {
-  apiKey: string
-  authDomain: string
-  projectId: string
-  storageBucket: string
-  messagingId: int
-  appId: string
-  measurementId: string
+  apiKey: string; // คีย์ API ที่ใช้สำหรับระบุและอนุญาตให้แอปของคุณเชื่อมต่อกับ Firebase
+  authDomain: string; // โดเมนที่ใช้สำหรับ Firebase Authentication
+  projectId: string; // รหัสโปรเจกต์ของ Firebase
+  storageBucket: string; // URL ของ Google Cloud Storage ที่เชื่อมโยงกับ Firebase
+  messagingId: int; // (น่าจะเป็น messagingSenderId) ใช้สำหรับ Firebase Cloud Messaging
+  appId: string; // ID ที่ใช้ระบุแอปพลิเคชันใน Firebase
+  measurementId: string; // (เลือกได้) ใช้สำหรับการติดตามข้อมูลผ่าน Google Analytics (สำหรับเว็บ)
 }
+```
+#### ตัวอย่างค่าคอนฟิก FirebaseConfig
+```typescript
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD***************XJKSz", // ตัวอย่างคีย์ API
+  authDomain: "your-app.firebaseapp.com",
+  projectId: "your-app",
+  storageBucket: "your-app.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abcdefghijk",
+  measurementId: "G-ABCDEFGH"
+};
+
+// เริ่มต้น Firebase
+const app = initializeApp(firebaseConfig);
+```
+_* Project นี้ใช้ .env เพื่อความปลอดภัยแทนการใส่ค่า firebaseConfig ในโค้ด_
+
+#### ตัวอย่างโค้ดวิธีการใช้งาน Firebase Authentication API
+```typescript
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut as firebaseSignOut } from 'firebase/auth';
+
+  const signIn = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await firebaseSignOut(auth);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
 ```
 
 ## 3. Build & Deploy
@@ -330,6 +372,7 @@ Project นี้เป็นส่วนหนึ่งของวิชา CT
     <img src="https://github.com/user-attachments/assets/607199c1-9426-4ebd-89f6-a8bfe342f26f" alt="advisor" width="160" />
 </a><br>
 อาจารย์ที่ปรีกษา: ผู้ช่วยศาสตราจารย์ ดร.ชัยพร เขมะภาตะพันธ์<br>
+<img src="https://github.com/user-attachments/assets/3a97ba32-4c74-4f02-a2a6-5482894be2f2" alt="github" width="32" />
 <a href="https://github.com/natnon007/tetris-game" target="_blank">
     Github
 </a><br>
