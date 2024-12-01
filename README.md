@@ -4,7 +4,7 @@
 
 ## 1. หลักการพัฒนา
 เกม Tetris นี้ถูกพัฒนาขึ้นโดยใช้ Vite+React, TypeScript, Bun และ Elysia ในการพัฒนาโดยจุดสำคัญของเกม Tetris นี้มีดังนี้
-### a. หัวใจสำคัญของเกม
+### 1.1. ระบบเกม
 ```plaintext
 1. บล็อก Tetris
 const TETROMINOES = {
@@ -22,7 +22,7 @@ isValidMove(y: number, x: number, pieceMatrix: number[][])
 - ตรวจสอบขอบบอร์ด
 - ตรวจสอบการชนกับบล็อกอื่น
 ```
-### b. ระบบคะแนน
+### 1.2. ระบบคะแนน
 ```plaintext
 1. การให้คะแนน
 - เคลียร์แถว: score += (lines * 100 * level)
@@ -31,7 +31,7 @@ isValidMove(y: number, x: number, pieceMatrix: number[][])
 2. ระดับความยาก
 - เพิ่มระดับ Level ทุก 10 แถว
 ```
-### c. จุดเด่นในการพัฒนา
+### 1.3. จุดเด่นในการพัฒนา
 ```plaintext
 1. แยกส่วนการทำงานระหว่าง Game Logic และ UI อย่างชัดเจนทำให้ง่ายต่อการทดสอบและบำรุงรักษา
 2. แยก Game State และ Display State
@@ -46,32 +46,68 @@ isValidMove(y: number, x: number, pieceMatrix: number[][])
 #### 1. Frontend เทคโนโลยีที่ใช้
 ```plaintext
 // Core Technologies
-- React                // JavaScript library สำหรับสร้าง UI
-- TypeScript           // Typed JavaScript
-- Vite                 // Build tool และ development server
-- Styled-components    // CSS-in-JS library
+1. React
+- เป็นไลบรารี JavaScript สำหรับสร้างส่วนติดต่อผู้ใช้ (UI)
+- ใช้สร้างหน้าเว็บแบบ Single Page Application โดยแบ่งหน้าเว็บเป็นส่วนๆ (Components) ทำให้จัดการง่าย
+
+2. TypeScript
+- คือภาษาโปรแกรมมิ่งที่เพิ่มระบบ Type เข้าไปใน JavaScript
+- ใช้เพื่อช่วยลดข้อผิดพลาดในการเขียนโค้ด ทำให้เขียนโค้ดได้ปลอดภัยขึ้น และมีเครื่องมือช่วยเขียนโค้ดที่ดีกว่า
+
+3. Vite
+- คือเครื่องมือสำหรับพัฒนาและสร้างเว็บแอพ
+- ช่วยทำให้การพัฒนาเว็บเร็วขึ้น มีระบบ hot reload และสร้างไฟล์สำหรับนำขึ้น production
+
+4. Styled-components
+- คือไลบรารีสำหรับเขียน CSS ใน JavaScript
+- ช่วยจัดการสไตล์ของ component แต่ละตัว ทำให้สไตล์ไม่ปนกัน และสามารถเปลี่ยนสไตล์ตาม props ได้
 
 // Authentication
-- Firebase Auth        // ระบบ Google Sign-in
-- Firebase SDK         // Firebase JavaScript SDK
+1. Firebase Auth
+- คือระบบยืนตัวตนของ Firebase
+- ใช้จัดการการล็อกอินด้วย Google โดยไม่ต้องเขียนระบบเอง
+
+2. Firebase SDK
+- คือชุดเครื่องมือสำหรับใช้งาน Firebase
+- ใช้เชื่อมต่อกับบริการต่างๆ ของ Firebase เช่น Authentication, Database
 
 // API Communication
-- GraphQL API          // ใช้สื่อสารกับ Backend
-- Fetch API            // เรียกใช้ External APIs
+1. GraphQL API
+- คือภาษาสำหรับเรียกข้อมูลจาก API
+- ใช้ดึงข้อมูลจาก Backend โดยระบุข้อมูลที่ต้องการ
+
+2. Fetch API
+- คือ API มาตรฐานสำหรับเรียกข้อมูลผ่าน HTTP
+- ใช้ส่งคำขอไปยังเซิร์ฟเวอร์ เช่น ดึง IP address ของผู้ใช้
 ```
 #### 2. Backend + Database เทคโนโลยีที่ใช้
 ```plaintext
 // Core Technologies
-- Bun                 // JavaScript runtime
-- Elysia              // Web framework สำหรับ Bun
-- TypeScript          // Type safety
+1. Bun
+- คือตัวรันโค้ด JavaScript รุ่นใหม่
+- ใช้รันโค้ด Backend ได้เร็วกว่า Node.js และมีฟีเจอร์ที่สะดวกกว่า
+
+2. Elysia
+- คือเฟรมเวิร์คสำหรับสร้าง Web Server บน Bun
+- ใช้จัดการ HTTP requests และสร้าง API endpoints
+
+3. TypeScript (Backend)
+- คือภาษาโปรแกรมมิ่งที่เพิ่มระบบ Type เข้าไปใน JavaScript เหมือนที่ใช้ใน Frontend
+- ทำให้โค้ด Backend มีความปลอดภัยและจัดการง่ายขึ้น
 
 // API Layer
-- GraphQL             // Query language
-- GraphQL Yoga        // GraphQL server implementation
+1. GraphQL
+- คือภาษาสำหรับออกแบบ API
+- ใช้สร้างจุดเชื่อมต่อเดียวที่ Frontend สามารถเรียกข้อมูลได้หลากหลายรูปแบบ
+
+2. GraphQL Yoga
+- คือเซิร์ฟเวอร์สำหรับรัน GraphQL
+- ใช้จัดการคำขอ GraphQL และส่งข้อมูลกลับไปยัง Frontend
 
 // Database
-- PostgreSQL          // Relational database
+1. PostgreSQL
+- คือเป็นฐานข้อมูลแบบ Relational
+- ใช้สำหรับเก็บข้อมูลทั้งหมดของระบบ เช่น คะแนน ข้อมูลผู้เล่น
 ```
 
 ### โครงสร้างเกมและ Diagram
@@ -129,7 +165,7 @@ tetris-game/                      # Root directory
 #### 4. Database Design
 ```sql
 -- Scores Table
-CREATE TABLE scores (
+CREATE TABLE ns_scores (
   id SERIAL PRIMARY KEY,
   player_name VARCHAR(50) NOT NULL,
   score INTEGER NOT NULL,
@@ -195,15 +231,7 @@ interface DatabaseAPI {
 ```
 
 ### E. External Service APIs
-```typescript
-// IP & Location APIs
-interface LocationAPI {
-  getPlayerIP(): Promise<string>
-  getCountryFromIP(ip: string): Promise<string>
-}
-// Flag CDN API
-getFlagUrl(countryCode: string): string
-```
+
 #### 1. getPlayerIP() : ทำหน้าที่ค้นหา Public IP Address ของผู้เล่น
 **API:**
 ```
