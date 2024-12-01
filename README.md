@@ -5,23 +5,178 @@
 ## 1. หลักการพัฒนา
 เกม Tetris นี้ถูกพัฒนาขึ้นโดยใช้ Vite+React, TypeScript, Bun และ Elysia ในการพัฒนาโดยจุดสำคัญของเกม Tetris นี้มีดังนี้
 ### 1.1. ระบบเกม
+#### 1. บล็อก Tetris
 ```plaintext
-1. บล็อก Tetris
 const TETROMINOES = {
   I, J, L, O, S, T, Z  // บล็อกพื้นฐาน 7 แบบ
 };
+```
+ใช้ array ในการกำหนดรูปแบบของบล็อก Tetris แต่ละชนิด โดยตัวเลข 0 และ 1 แทนรูปร่างของบล็อก
+โค้ดตัวอย่าง
+```typescript
+export const TETROMINOES: Record<TetrominoType, number[][][]> = {
+  I: [
+    [[1, 1, 1, 1]],
+    [[1], [1], [1], [1]],
+  ],
+  J: [
+    [[1, 0, 0], [1, 1, 1]],
+    [[1, 1], [1, 0], [1, 0]],
+    [[1, 1, 1], [0, 0, 1]],
+    [[0, 1], [0, 1], [1, 1]],
+  ],
+  L: [
+    [[0, 0, 1], [1, 1, 1]],
+    [[1, 0], [1, 0], [1, 1]],
+    [[1, 1, 1], [1, 0, 0]],
+    [[1, 1], [0, 1], [0, 1]],
+  ],
+  O: [
+    [[1, 1], [1, 1]],
+  ],
+  S: [
+    [[0, 1, 1], [1, 1, 0]],
+    [[1, 0], [1, 1], [0, 1]],
+  ],
+  T: [
+    [[0, 1, 0], [1, 1, 1]],
+    [[1, 0], [1, 1], [1, 0]],
+    [[1, 1, 1], [0, 1, 0]],
+    [[0, 1], [1, 1], [0, 1]],
+  ],
+  Z: [
+    [[1, 1, 0], [0, 1, 1]],
+    [[0, 1], [1, 1], [1, 0]],
+  ],
+};
+```
+โดยที่:
+  - 1 แทนส่วนที่มีบล็อก (แสดงเป็นสี)
+  - 0 แทนส่วนที่ว่าง (โปร่งใส)
+  - แต่ละบล็อกมีหลายแบบตามการหมุน
+  - ชื่อของบล็อกมาจากรูปร่างที่คล้ายตัวอักษร I, J, L, O, S, T, Z
 
-2. การเคลื่อนที่
-- เลื่อนซ้าย/ขวา (moveLeft, moveRight)
-- เลื่อนลง (moveDown)
-- หมุน (rotate)
-- Hard Drop (hardDrop)
+#### 2. การควบคุมการเคลื่อนที่ของบล็อก
+##### 2.1 เลื่อนซ้าย/ขวา (moveLeft, moveRight)
+```typescript
+// การเลื่อนจะต้องเช็คว่าสามารถเลื่อนได้หรือไม่
+const [y, x] = currentPiece.position;
 
-3. ระบบตรวจสอบการชน
-isValidMove(y: number, x: number, pieceMatrix: number[][]) 
+// เลื่อนซ้าย: ลด x ลง 1
+if (isValidMove(y, x - 1, pieceMatrix)) {
+  setCurrentPiece({
+    ...currentPiece,
+    position: [y, x - 1]
+  });
+}
+
+// เลื่อนขวา: เพิ่ม x ขึ้น 1
+if (isValidMove(y, x + 1, pieceMatrix)) {
+  setCurrentPiece({
+    ...currentPiece,
+    position: [y, x + 1]
+  });
+}
+```
+##### 2.2 เลื่อนลง (moveDown)
+```typescript
+// ถ้าเลื่อนลงได้: เพิ่ม y ขึ้น 1
+if (isValidMove(y + 1, x, pieceMatrix)) {
+  setCurrentPiece({
+    ...currentPiece,
+    position: [y + 1, x]
+  });
+} else {
+  // ถ้าเลื่อนลงไม่ได้:
+  // 1. ล็อคบล็อกไว้กับกระดาน
+  // 2. เช็คแถวที่เต็ม
+  // 3. สร้างบล็อกใหม่
+  lockPiece();
+  checkLines();
+  spawnNewPiece();
+}
+```
+##### 2.3 หมุน (rotate)
+```typescript
+// การหมุนจะเปลี่ยน rotation ไปเรื่อยๆ โดยใช้ modulo
+const newRotation = (rotation + 1) % variations.length;
+
+// ลองหมุนในตำแหน่งปัจจุบัน
+if (isValidMove(y, x, newPieceMatrix)) {
+  setCurrentPiece({
+    ...currentPiece,
+    rotation: newRotation
+  });
+  return;
+}
+
+// ถ้าหมุนไม่ได้ ลอง wall kick (เลื่อนออกจากกำแพง)
+// ลองเลื่อนซ้าย
+if (isValidMove(y, x - 1, newPieceMatrix)) {
+  setCurrentPiece({
+    ...currentPiece,
+    position: [y, x - 1],
+    rotation: newRotation
+  });
+  return;
+}
+
+// ลองเลื่อนขวา
+if (isValidMove(y, x + 1, newPieceMatrix)) {
+  setCurrentPiece({
+    ...currentPiece,
+    position: [y, x + 1],
+    rotation: newRotation
+  });
+}
+```
+##### 2.4 Hard Drop (ทิ้งลงทันที)
+```typescript
+// หาตำแหน่งต่ำสุดที่บล็อกสามารถตกได้
+let dropDistance = 0;
+while (isValidMove(y + dropDistance + 1, x, pieceMatrix)) {
+  dropDistance++;
+}
+
+// วางบล็อกที่ตำแหน่งต่ำสุด
+const newY = y + dropDistance;
+
+// ล็อคบล็อก
+lockPiece(newY, x);
+
+// เพิ่มคะแนนพิเศษตามระยะที่ตก
+setScore(score + (dropDistance * 2));
+
+// เช็คแถวและสร้างบล็อกใหม่
+checkLines();
+spawnNewPiece();
+```
+
+#### 3. การตรวจสอบการเคลื่อนที่ (isValidMove)
 - ตรวจสอบขอบบอร์ด
 - ตรวจสอบการชนกับบล็อกอื่น
+```typescript
+const isValidMove = (newY: number, newX: number, matrix: number[][]) => {
+  // เช็คทุกช่องของบล็อก
+  for (let y = 0; y < matrix.length; y++) {
+    for (let x = 0; x < matrix[y].length; x++) {
+      if (matrix[y][x]) { // ถ้ามีบล็อกในตำแหน่งนี้
+        // เช็คว่าอยู่นอกกระดานหรือไม่
+        if (
+          newY + y >= BOARD_HEIGHT || // เกินขอบล่าง
+          newX + x < 0 ||            // เกินขอบซ้าย
+          newX + x >= BOARD_WIDTH || // เกินขอบขวา
+          (newY + y >= 0 && board[newY + y][newX + x].filled) // ชนบล็อกอื่น
+        ) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+};
 ```
+
 ### 1.2. ระบบคะแนน
 ```plaintext
 1. การให้คะแนน
