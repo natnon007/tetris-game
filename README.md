@@ -174,63 +174,7 @@ CREATE TABLE ns_scores (
 );
 ```
 
-## 2. API ที่สำคัญ
-### A. Game Core APIs
-```typescript
-interface GameLogicAPI {
-  // State
-  board: Cell[][]
-  score: number
-  level: number
-  gameOver: boolean
-  
-  // Actions
-  startGame(): void
-  moveLeft(): void
-  moveRight(): void
-  moveDown(): void
-  rotate(): void
-  hardDrop(): void
-  togglePause(): void
-}
-```
-
-### B. Authentication APIs
-```typescript
-interface AuthAPI {
-  user: User | null
-  signIn(): Promise<void>
-  signOut(): Promise<void>
-}
-```
-
-### C. GraphQL APIs
-```graphql
-# Queries
-query GetHighScores {
-  highScores(limit: Int): [Score!]!
-}
-
-# Mutations
-mutation SubmitScore {
-  submitScore(
-    player_name: String!
-    score: Int!
-    ip: String!
-  ): Score!
-}
-```
-
-### D. Database APIs
-```typescript
-interface DatabaseAPI {
-  getHighScores(limit: number): Promise<Score[]>
-  insertScore(data: ScoreData): Promise<Score>
-  updateRanks(): Promise<void>
-}
-```
-
-### E. External Service APIs
+## 2. APIs ที่ใช้งาน
 
 #### 1. getPlayerIP() : ทำหน้าที่ค้นหา Public IP Address ของผู้เล่น
 **API:**
