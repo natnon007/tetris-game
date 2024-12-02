@@ -320,7 +320,7 @@ tetris-game/                      # Root directory
 #### 4. Database Design
 ```sql
 -- Scores Table
-CREATE TABLE ns_scores (
+CREATE TABLE ns_tetris_scores (
   id SERIAL PRIMARY KEY,
   player_name VARCHAR(50) NOT NULL,
   score INTEGER NOT NULL,
