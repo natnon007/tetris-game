@@ -10,7 +10,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export const createTables = async (): Promise<void> => {
   try {
     await pool.query(`
-      CREATE TABLE IF NOT EXISTS scores (
+      CREATE TABLE IF NOT EXISTS ns_tetris_scores (
         id SERIAL PRIMARY KEY,
         player_name VARCHAR(50) NOT NULL,
         score INTEGER NOT NULL,

@@ -52,7 +52,7 @@ const startServer = async () => {
                 DENSE_RANK() OVER (
                   ORDER BY score DESC, created_at ASC
                 ) as rank
-              FROM scores
+              FROM ns_tetris_scores
             )
             SELECT *
             FROM RankedScores
@@ -68,7 +68,7 @@ const startServer = async () => {
           const countryCode = await getCountryFromIP(ip);
           
           const result = await pool.query(
-            'INSERT INTO scores (player_name, score, country_code) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO ns_tetris_scores (player_name, score, country_code) VALUES ($1, $2, $3) RETURNING *',
             [player_name, score, countryCode]
           );
           
@@ -79,7 +79,7 @@ const startServer = async () => {
                 DENSE_RANK() OVER (
                   ORDER BY score DESC, created_at ASC
                 ) as rank
-              FROM scores
+              FROM ns_tetris_scores
             )
             SELECT rank
             FROM RankedScores
